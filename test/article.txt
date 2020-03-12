@@ -1,0 +1,128 @@
+~~~ {#header}
+Titre
+Auteur1, Auteur2, Auteur3
+Date
+~~~
+~~~ {#keywords}
+mot1, mot2, mot3
+~~~
+
+# Introduction
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam consequat dui
+non metus dictum elementum. Vestibulum ante ipsum primis in faucibus orci
+luctus et ultrices posuere cubilia Curae; Nam ac diam sed dui tempus egestas.
+In feugiat ligula condimentum lorem dictum, ac ullamcorper ex semper. Morbi
+quis tincidunt massa. Pellentesque molestie finibus tellus, quis euismod enim
+pellentesque sit amet. Sed at tellus eu lectus tincidunt porttitor. Praesent
+luctus et nisi quis dignissim. Sed varius quam ante, non placerat neque
+sollicitudin sed. Nullam neque libero, hendrerit et euismod vel, lacinia vel
+libero. Duis facilisis ullamcorper elit, nec rutrum est semper quis. Ut ut
+aliquet ante. Suspendisse dictum, felis ut molestie fermentum, quam nisl
+condimentum magna, sed vehicula nulla turpis vitae turpis. Cras id libero ac
+enim ornare porta nec eget turpis.
+
+# Nom Section 
+
+## Nom Sous-section
+
+Phasellus auctor odio eu nisl laoreet tincidunt. Orci varius natoque penatibus
+et magnis dis parturient montes, nascetur ridiculus mus. Morbi placerat lectus
+augue, id consectetur magna suscipit a. Donec dictum ex ultricies ante euismod,
+ac feugiat erat egestas. Nulla malesuada venenatis eros, sed suscipit dolor.
+Fusce varius, justo quis fringilla interdum, augue sapien dictum justo, eget
+sagittis mi lectus ac purus. In imperdiet tortor lectus, eu vehicula mi feugiat
+vel. Phasellus egestas lobortis scelerisque. Suspendisse ante libero,
+vestibulum tincidunt ornare eu, ornare nec nibh. Integer et orci in urna
+ultrices feugiat at eget sapien. Mauris mattis magna ullamcorper eleifend
+pharetra. Mauris imperdiet, tellus sed aliquet vestibulum, erat justo varius
+sapien, sit amet hendrerit ex lorem non elit. Orci varius natoque penatibus et
+magnis dis parturient montes, nascetur ridiculus mus. 
+
+![Légende](./image.pdf)
+
+
+## Nom Sous-section
+
+Suspendisse placerat libero nulla, sed facilisis metus mollis accumsan. Aenean
+semper rhoncus lectus. 
+
+1. Nunc tempus odio a consequat interdum. Donec semper ullamcorper ipsum, at
+viverra sapien euismod ut. 
+
+2. Sed sit amet rutrum metus, at pellentesque lacus. Praesent vitae eleifend
+eros. 
+
+3. Proin sed mauris convallis lorem lacinia mattis. Integer porttitor, nunc sit
+amet malesuada porta, nisi odio porttitor ligula, sed accumsan massa dolor sed
+sapien. Praesent nibh neque, luctus a congue vel, commodo a diam. Praesent
+suscipit, odio eu ornare posuere, turpis odio aliquet purus, vel convallis eros
+elit eget massa. 
+
+
+~~~ {#console}
+$ ls /proc/
+1       115     140527  181893  2      33964  487    757          
+10      116     140560  184055  20     34     49     777          
+1001    116452  141045  184819  200    34288  496    786          
+1003    118     14371   185     202    34293  50     795          
+1004    1199    14376   186     203    3450   502    79620        
+1006    12      14381   18736   207    35     51     804          
+10196   1205    14382   19      21     35136  5186   82976        
+10268   12220   14388   190279  211    35137  5190   88292        
+10273   12225   14391   193029  212    35257  5191   88385        
+10307   12230   14397   193599  2299   35275  52     885          
+10318   12244   149441  193678  23     35750  53     88839        
+10334   12245   149449  194     2315   36     533    88923        
+10360   12247   149473  194977  2316   37349  54     897          
+10361   12266   149474  195024  24     377    545    9            
+104     12269   149607  195420  249    38     55     
+10432   12315   149618  196162  25     380    56     
+~~~
+
+Integer molestie pharetra erat in imperdiet. Quisque gravida purus luctus leo
+ornare auctor. Nunc eu nisi urna. Duis finibus id lorem id euismod. Nullam
+vulputate purus non feugiat convallis. Etiam suscipit mi mi, ac rutrum ante
+imperdiet molestie. Sed accumsan sit amet massa sit amet finibus. Nam quis
+ligula mollis, convallis lacus vestibulum, ultrices odio. Integer fermentum,
+risus sit amet cursus pretium, urna enim vulputate dui, quis dictum libero
+tellus ut mi. Duis hendrerit purus enim, vel euismod quam aliquet vitae.
+Integer pretium mauris at nunc pellentesque mollis eget ac nunc. Mauris et nisi
+sit amet est maximus varius. Curabitur pulvinar at sem vel fringilla.
+
+~~~
+#include <stdio.h>
+
+int main(void) {
+  printf("Bonjour tout le monde!\n");
+  return 0;
+}
+~~~
+
+La fonction `printf` bla bla.
+Sed cursus ligula eget congue tempus. Etiam et lectus ullamcorper, rhoncus erat
+a, pharetra lectus. Nam at convallis eros. Lorem ipsum dolor sit amet,
+consectetur adipiscing elit. Suspendisse ullamcorper nunc tortor, in
+consectetur risus blandit eget. Praesent porta dui mi, nec vestibulum ante
+hendrerit laoreet. Donec gravida posuere justo at molestie.
+
+  * rosa
+  * rosa
+  * rosam
+  * rosae
+  * rosae
+  * rosa
+
+# Conclusion
+
+Nunc dictum nec mi id varius. Vestibulum tristique tempor hendrerit. Vivamus
+quis ligula augue. Nam facilisis neque ut sapien ultricies, ac feugiat massa
+tincidunt. Duis ornare odio ut viverra venenatis. Morbi eget lacinia diam.
+Suspendisse potenti. Aliquam erat odio, accumsan ut libero sit amet, tincidunt
+aliquet lorem. Cras vitae euismod est, non porttitor ante. Donec tincidunt, sem
+at porta mattis, libero quam facilisis nibh, eu euismod velit ex a ligula.
+Aliquam tempus velit elementum turpis dictum auctor. Ut nec magna tortor.
+
+# Références
+
+[1] Ieu Eauvidoum et al. ...
