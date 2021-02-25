@@ -3,12 +3,13 @@
 from pandocfilters import toJSONFilter, Str, RawBlock, Div, RawInline, Para, Plain, BulletList, DefinitionList
 import base64
 import os
+import re
 
 header_count = {"1": 0, "2": 0, "3": 0}
 figure_count = 0
 
 def handleBulletList(value):
-    r = [] 
+    r = []
     r1 = RawBlock('html', '<text:list text:style-name="L1">')
     r.append(r1)
     for v in value:
@@ -25,7 +26,7 @@ def handleBulletList(value):
                 for e in p:
                     r.append(e)
             else:
-                p = Para(item['c']) 
+                p = Para(item['c'])
                 p = makePlainFromPara(p)
                 r.append(p)
 
@@ -34,11 +35,11 @@ def handleBulletList(value):
     r2 = RawBlock('html', '</text:list>')
     r.append(r2)
 
-    return r 
+    return r
 
 def handleOrderedList(value):
     number = value[0][0]
-    r = [] 
+    r = []
     r1 = RawBlock('html', '<text:list text:style-name="L3">')
     r.append(r1)
     for v in value[1]:
@@ -55,7 +56,7 @@ def handleOrderedList(value):
                 for e in p:
                     r.append(e)
             else:
-                p = Para(item['c']) 
+                p = Para(item['c'])
                 p = makePlainFromPara(p)
                 r.append(p)
         r.append(RawBlock('html', '</text:list-item>'))
@@ -106,6 +107,13 @@ def handleCode(value):
     r.append(RawInline('html', '</text:span>'))
     return r
 
+def handleItalic(value):
+    v = value[0]
+    r = []
+    r.append(RawInline('html', '<text:span text:style-name="italic">'))
+    r.append(v)
+    r.append(RawInline('html', '</text:span>'))
+    return r
 
 # code and console blocks
 def handleCodeBlock(value):
@@ -124,13 +132,16 @@ def handleCodeBlock(value):
         linenbr = linenbr + 1
         rb1 = RawBlock( 'html', '<text:p text:style-name="' + t + '">')
         r.append(rb1)
-#        # add line number for code blocks only
-#        if t == "code":
-#            linenbrstr = "{:2d}".format(linenbr)
-#            lnlspaces = len(linenbrstr) - len(linenbrstr.lstrip(' '))
-#            if lnlspaces > 0:
-#                r.append(RawBlock('html', '<text:s/>'))
-#            r.append(RawBlock('html', linenbrstr))
+        # add line number for code blocks only
+        if t == "code":
+            linenbrstr = "{:02d}".format(linenbr)
+            i = 0
+            #while i < len(linenbrstr) and linenbrstr[i] == " ":
+            ##lnlspaces = len(linenbrstr) - len(linenbrstr.lstrip(' '))
+            ##if lnlspaces > 0:
+            #    r.append(RawBlock('html', '<text:s/>'))
+            #    i += 1
+            r.append(RawBlock('html', linenbrstr))
         # count number of space characters at the beginning of the line
         lspaces = len(s) - len(s.lstrip(' '))
         if lspaces > 0:
@@ -140,6 +151,35 @@ def handleCodeBlock(value):
         r.append(rb2)
     return r
 
+
+def handleParagraphValue(v):
+    vals = []
+    t = v['t']
+    if t == 'Str':
+        s = v['c']
+        m = re.search('^(\[.*\])(.?)', s) # with "[test]." group(1) is "[test]" group(2) is "."
+        if m and not s.startswith("[...]"):
+            rb1 = RawInline( 'html', '<text:span text:style-name="gras">')
+            vals.append(rb1)
+            vals.append(RawInline('html', m.group(1)))
+            rb2 = RawInline( 'html', '</text:span>')
+            vals.append(rb2)
+            if len(m.group(2)) > 0:
+                vals.append(RawInline('html', m.group(2)))
+            return vals
+        m = re.search('^(http.?://.*)([.,;:]?)', s)
+        if m:
+            rb1 = RawInline( 'html', '<text:span text:style-name="url"><text:span text:style-name="T8">')
+            vals.append(rb1)
+            vals.append(RawInline('html', m.group(1)))
+            rb2 = RawInline( 'html', '</text:span></text:span>')
+            vals.append(rb2)
+            if len(m.group(2)) > 0:
+                vals.append(RawInline('html', m.group(2)))
+            return vals
+    vals = [v]
+    return vals
+
 def makePlainFromParaValues(values):
     newv = []
     t = values[0]['t']
@@ -148,10 +188,13 @@ def makePlainFromParaValues(values):
             newv.append(v)
         p = Plain(newv)
         return p
+
     rb1 = RawInline( 'html', '<text:p text:style-name="Normal">')
     newv.append(rb1)
     for v in values:
-        newv.append(v)
+        myvals = handleParagraphValue(v)
+        for myv in myvals:
+            newv.append(myv)
     rb2 = RawInline( 'html', '</text:p>')
     newv.append(rb2)
     p = Plain(newv)
@@ -228,13 +271,17 @@ def caps(key, value, format, meta):
     if key == 'Para':
         p = makePlainFromParaValues(value)
         return p
-            
+
     elif key == 'Header':
         r = handleHeaders(value)
         return r
 
-    elif key == 'Code':
+    elif key == 'Code': # text between ` and `
         r = handleCode(value)
+        return r
+
+    elif key == 'Emph': # Italic
+        r = handleItalic(value)
         return r
 
     elif key == 'BulletList':
@@ -243,7 +290,7 @@ def caps(key, value, format, meta):
 
     if key == 'OrderedList':
         r = handleOrderedList(value)
-        return r 
+        return r
 
     if key == 'CodeBlock':
         r = handleCodeBlock(value)
