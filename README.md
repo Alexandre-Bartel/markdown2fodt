@@ -6,15 +6,19 @@ pour faciliter l'écriture collaborative d'articles dans MISCMAG (https://www.mi
 
 # Dépendances
 
-
 ```
-# apt-get install pandoc
+# apt-get install pandoc python3-pandocfilters
 ```
-
 
 # Utilisation
 
-
 ```
 $ bash /path/to/md2fodt.sh /path/to/article.txt
+```
+
+# Exemple
+
+```
+$ bash md2fodt.sh ./test/article.txt
+$ libreoffice ./test/article.txt.fodt
 ```
