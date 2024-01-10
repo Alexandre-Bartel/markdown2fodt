@@ -16,9 +16,16 @@ pour faciliter l'écriture collaborative d'articles dans MISCMAG (https://www.mi
 $ bash /path/to/md2fodt.sh /path/to/article.txt
 ```
 
-# Exemple
+# Exemple (génère un fichier fodt sans images)
 
 ```
 $ bash md2fodt.sh ./test/article.txt
+$ libreoffice ./test/article.txt.fodt
+```
+
+# Exemple (génère un fichier fodt avec images)
+
+```
+$ bash md2fodt.sh ./test/article.txt -i
 $ libreoffice ./test/article.txt.fodt
 ```
