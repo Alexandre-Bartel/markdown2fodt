@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 
 from pandocfilters import toJSONFilter, Str, RawBlock, Div, RawInline, Para, Plain, BulletList, DefinitionList
+from PIL import Image
 import base64
 import os
 import re
 
 header_count = {"1": 0, "2": 0, "3": 0}
 figure_count = 0
+inline_images = True
 
 def handleBulletList(value):
     r = []
@@ -237,26 +239,37 @@ def handleHeaders(value):
         raise Exception("unknown header depth: ", depth)
 
 
+def formatBase64(str64, charNum):
+    split = [str64[i:i+charNum] for i in range(0, len(str64), charNum)]
+    return "\n".join(split)
+
 def handleImage(value):
     global figure_count
-    INLINE_IMAGE = False # pour miscmag
+    global inline_images
     figure_count += 1
     caption = value[1]
     src = value[2][0]
     r = []
 
-    if INLINE_IMAGE:
-        r.append(RawInline('html', '<draw:frame draw:style-name="fr1" draw:name="Image1" text:anchor-type="char" svg:width="6.6925in" svg:height="4.2571in" draw:z-index="0">'))
-        r.append(RawInline('html', '<draw:image>'))
+    if inline_images:
+        im = Image.open(src)
+        width, height = im.size
+        ratio = height/width
+        w = 6.6
+        h = 6.6 * ratio
+        r.append(RawInline('html', '<text:p>\n'))
+        r.append(RawInline('html', '<draw:frame draw:style-name="fr1" draw:name="Image1" text:anchor-type="frame" svg:width="'+str(w)+'in" svg:height="'+str(h)+'in" draw:z-index="0">\n'))
+        r.append(RawInline('html', '<draw:image >\n'))
         r.append(RawInline('html', '<office:binary-data>'))
 
         with open(src, "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read())
-            r.append(RawInline('html', encoded_string.decode('ascii')))
+            r.append(RawInline('html', formatBase64(encoded_string.decode('ascii'), 72)))
 
-        r.append(RawInline('html', '</office:binary-data>'))
-        r.append(RawInline('html', '</draw:image>'))
-        r.append(RawInline('html', '</draw:frame>'))
+        r.append(RawInline('html', '</office:binary-data>\n'))
+        r.append(RawInline('html', '</draw:image>\n'))
+        r.append(RawInline('html', '</draw:frame>\n'))
+        r.append(RawInline('html', '</text:p>\n'))
     else:
         r.append(RawInline('html', '\n<text:p text:style-name="pragma">/// Image : ' + os.path.basename(src) + ' ///</text:p>\n'))
     # insert caption
@@ -304,4 +317,9 @@ def caps(key, value, format, meta):
         return # do nothing
 
 if __name__ == "__main__":
+
+    inline_images = False
+    if "SHOW_IMG_FODT" in os.environ:
+        inline_images = True
+
     toJSONFilter(caps)
