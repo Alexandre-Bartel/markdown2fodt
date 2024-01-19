@@ -130,6 +130,12 @@ def handleCodeBlock(value):
         return getKeywords(value[1])
     ## fin hack
     linenbr = 0
+    isdiff = False
+    l0 = value[1].split('\n')[0]
+    if l0.startswith("@@ -"): # it's a diff! get starting linenbr
+        startnbr = l0.split("@@ -")[1].split(",")[0]
+        isdiff = True
+        startnbr = int(startnbr) -1
     for s in value[1].split('\n'):
         linenbr = linenbr + 1
         rb1 = RawBlock( 'html', '<text:p text:style-name="' + t + '">')
